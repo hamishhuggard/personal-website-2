@@ -14,16 +14,33 @@ body, h1, h2, h3, h4, h5, h6 {
     text-align: center;
 }
 
-.sections {
+.grid-3-cols {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
 }
 
-h2 a {
+.grid-2-cols {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+/*    display: flex;
+    justify-content: center;
+    gap: 60px; */
+}
+
+@media screen and (max-width: 600px) {
+    .grid-3-cols {
+        grid-template-columns: 1fr;
+    }
+    .grid-2-cols {
+        grid-template-columns: 1fr;
+    }
+}
+
+h2 > a, h3 > a {
     line-height:30px;
 }
 
-h2 a::after {
+h2 > a::after, h3 > a::after {
     top: 30px;
 }
 
@@ -50,11 +67,6 @@ a:hover::after {
 }
 
 
-@media screen and (max-width: 600px) {
-    .sections {
-        grid-template-columns: 1fr;
-    }
-}
 
 @media (prefers-color-scheme: dark) {
     background: black;
