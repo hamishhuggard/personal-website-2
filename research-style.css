@@ -1,14 +1,16 @@
-.papers-container {
+.grid-1-2-fr {
     padding: 0px 100px;
     display: grid;
     grid-template-columns: 1fr 2fr;
 }
 .cover-container {
+    display: grid;
+    place-items: center;
 }
 
 .text-container {
 }
 
-.cover {
-    width: 100%;
+.paper-cover {
+    height: 300px;
 }
