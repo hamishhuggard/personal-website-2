@@ -13,3 +13,54 @@ body, h1, h2, h3, h4, h5, h6 {
     margin: 0 auto;
     text-align: center;
 }
+
+.sections {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+
+
+
+
+h2 {
+    line-height:30px;
+}
+
+h2 a::after {
+    top: 30px;
+}
+
+a {
+    position: relative;
+    display: inline-block;
+    color: grey;
+    text-decoration: none;
+}
+
+a::after {
+    content: "";
+    position: absolute;
+    height: 2px;
+    width: 0%;
+    left: 5%;
+    background-color: rgba(0, 0, 0, 0.6);
+    transition: 0.2s ease all .3s;
+}
+
+a:hover::after {
+    width: 90%;
+    transition: 0.2s ease all;
+}
+
+
+@media screen and (max-width: 600px) {
+    .sections {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    background: black;
+    color: white;
+}
