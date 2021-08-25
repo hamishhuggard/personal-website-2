@@ -36,6 +36,12 @@ body, h1, h2, h3, h4, h5, h6 {
     }
 }
 
+.grid-1-2-fr {
+    padding: 0px 100px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+
 h2 > a, h3 > a {
     line-height:30px;
 }
@@ -71,4 +77,18 @@ a:hover::after {
 @media (prefers-color-scheme: dark) {
     background: black;
     color: white;
+}
+
+/* research page styles */
+
+.cover-container {
+    display: grid;
+    place-items: center;
+}
+
+.text-container {
+}
+
+.paper-cover {
+    height: 300px;
 }
