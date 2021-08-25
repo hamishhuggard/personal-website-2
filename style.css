@@ -42,9 +42,16 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 .grid-1-2-fr {
-    padding: 0px 100px;
+    padding: 0px 75px;
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 600px) {
+    .grid-1-2-fr {
+        padding: 0px 100px;
+        grid-template-columns: 1fr 2fr;
+    }
 }
 
 h2 > a, h3 > a {
@@ -83,6 +90,11 @@ a:hover::after {
     background: black;
     color: white;
 }
+
+/* .title {
+    text-align: center;
+    font-size: large;
+} */
 
 /* research page styles */
 
