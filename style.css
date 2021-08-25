@@ -47,7 +47,7 @@ body, h1, h2, h3, h4, h5, h6 {
     grid-template-columns: 1fr;
 }
 
-@media screen and (min-width: 600px) {
+@media screen and (min-width: 800px) {
     .grid-1-2-fr {
         padding: 0px 100px;
         grid-template-columns: 1fr 2fr;
