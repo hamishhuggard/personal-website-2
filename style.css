@@ -54,37 +54,34 @@ body, h1, h2, h3, h4, h5, h6 {
     }
 }
 
-h2 > a, h3 > a {
-    line-height:30px;
-}
-
-h2 > a::after, h3 > a::after {
-    top: 30px;
-}
-
 a {
-    position: relative;
-    display: inline-block;
     color: grey;
     text-decoration: none;
 }
 
-a::after {
-    content: "";
-    position: absolute;
-    height: 2px;
-    width: 0%;
-    left: 5%;
-    background-color: rgba(0, 0, 0, 0.6);
-    transition: 0.2s ease all .3s;
+.hover-animation {
+  display: inline-block;
+  position: relative;
+  color: grey;
 }
 
-a:hover::after {
-    width: 90%;
-    transition: 0.2s ease all;
+.hover-animation:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: grey;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
 }
 
-
+.hover-animation:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
 
 @media (prefers-color-scheme: dark) {
     background: black;
