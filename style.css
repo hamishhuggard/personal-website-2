@@ -111,10 +111,12 @@ a {
     color: white;
 }
 
-/* .title {
-    text-align: center;
-    font-size: large;
-} */
+@media screen and (max-width: 800px) {
+    .title {
+        text-align: center;
+        font-size: large;
+    }
+}
 
 /* research page styles */
 
@@ -144,7 +146,7 @@ a {
 
 @media screen and (min-width: 800px) {
     .img-txt-grid {
-        padding: 0px 75px;
+        padding: 75px 75px;
         grid-template-columns: 1fr 2fr;
     }
 }
