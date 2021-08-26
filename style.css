@@ -1,11 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap');
 
+/* ------------------------------------- */
+/*               UTILS                   */
+/* ------------------------------------- */
+
 .center {
     display: grid;
     place-items: center;
 }
 
-body, h1, h2, h3, h4, h5, h6 {
+* {
     font-family: 'Quicksand', sans-serif;
 }
 
@@ -54,6 +58,20 @@ body, h1, h2, h3, h4, h5, h6 {
     }
 }
 
+/* ------------------------------------- */
+/*               HOME                    */
+/* ------------------------------------- */
+
+@media screen and (max-width: 800px) {
+    .home-animation {
+        width: 200px;
+    }
+}
+
+/* ------------------------------------- */
+/*               LINKS                   */
+/* ------------------------------------- */
+
 a {
     color: grey;
     text-decoration: none;
@@ -83,6 +101,11 @@ a {
   transform-origin: bottom left;
 }
 
+/* ------------------------------------- */
+/*             DARK MODE                 */
+/* ------------------------------------- */
+
+
 @media (prefers-color-scheme: dark) {
     background: black;
     color: white;
@@ -106,4 +129,56 @@ a {
 
 .paper-cover {
     height: 300px;
+}
+
+
+/* ------------------------------------- */
+/*              IMAGES                   */
+/* ------------------------------------- */
+
+.img-txt-grid {
+    padding: 0px 0px;
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.left-container {
+    float: right;
+    padding: 30px 30px;
+    max-width: 100%;
+}
+
+.extra-padding {
+    padding: 40px 40px;
+}
+
+.right-container {
+    float: left;
+    padding: 10px 30px;
+    box-sizing: border-box;
+}
+
+.left-image-container {
+    max-width: 100%;
+}
+
+.left-image {
+    max-height: 300px;
+    max-width: 300px;
+}
+
+.cols-2-degs {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 5px;
+}
+
+@media screen and (min-width: 800px) {
+    .img-txt-grid {
+        padding: 0px 0px;
+        grid-template-columns: 1fr 2fr;
+    }
+    .left-image-container {
+        height: 300px;
+    }
 }
