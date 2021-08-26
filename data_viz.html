@@ -1,52 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
+    <head>
     <title>Hamish Huggard</title>
-  <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
-  </head>
-  <body>
-    <div class="center" style="height: 100vh;">
-        <div>
-          <div class="grid-1-2-fr">
+</head>
+<body>
+        <div class="img-txt-grid">
 
-              <div class="center" style="height: 250px">
-                  <div>
-                      <a href="/">
-                          <img height="100px" src="/images/wiggly_dancing_guy.gif"/>
-                      </a>
-                      <h3><span class="hover-animation"><a href="/">Home</a></span></h3>
-                  </div>
-              </div>
-              <div class="title">
-                  <h1>Data Visualisation</h1>
-              </div>
+            <div style="height: 100px" class="left-container center">
+                <div class="left-image-container extra-padding">
+                    <a href="/">
+                        <img style="height: 100px" class="left-image" src="/images/wiggly_dancing_guy.gif"/>
+                    </a>
+                    <h3><span class="hover-animation"><a href="/">Home</a></span></h3>
+                </div>
+            </div>
+            <div class="right-container">
+                <h1>Data Visualisation</h1>
+            </div>
 
-              <div class="cover-container padding-20">
-                  <a href="https://effectivealtruismdata.com">
-                      <img height="220px" src="/images/ea_data_viz_demo.png"/>
-                  </a>
-              </div>
-              <div class="text-container">
-                  <h2><span class="hover-animation"><a href="https://effectivealtruismdata.com">EffectiveAltruismData.com</a></span></h2>
-                  <p>Effective Altruism (EA) is a collective of quantitatively-minded philanthropists and do-gooders. There are many EA organisations who collect data on grants, donors, pledges, and so on, so I built this website to aggregate and visualise this data.</p>
-                  <p>The website is coded in Python using Dash and Plotly, and deployed with Heroku. And it's responsive!</p>
-              </div>
+            <div class="left-container center">
+                <div class="left-image-container extra-padding">
+                    <a href="https://effectivealtruismdata.com">
+                        <img class="left-image" src="/images/ea_data_viz_demo.png"/>
+                    </a>
+                </div>
+            </div>
+            <div id="ea_data_viz" class="right-container">
+                <h2><span class="hover-animation"><a href="https://effectivealtruismdata.com">EffectiveAltruismData.com</a></span></h2>
+                <p>Effective Altruism (EA) is a collective of quantitatively-minded philanthropists and do-gooders. There are many EA organisations who collect data on grants, donors, pledges, and so on, so I built this website to aggregate and visualise this data.</p>
+                <p>The website is coded in Python using Dash and Plotly, and deployed with Heroku. And it's responsive!</p>
+            </div>
 
-              <div class="cover-container">
-                  <a href="https://litmaps.co">
-                      <img height="250px" src="/images/litmaps_demo.gif"/>
-                  </a>
-              </div>
-              <div class="text-container">
-                  <h2><span class="hover-animation"><a href="https://litmaps.co">Litmaps</a></span></h2>
-                  <p>Litmaps is an early stage startup which builds tools for visualising and discovering scientific papers.</p>
-                  <p>This involved finding visualisation use-cases, designing algorithms to achieve visualisation objectives, implementing these algorithms in performant javascript, and setting up any necessary backend using FastAPI and Python.</p>
-                  <p>I coded the visualisation logic currently in production. More details can be found <a href="https://www.litmaps.co/blog/posts/guide-to-litmaps-visualisations">here</a>.</p>
-              </div>
+            <div class="left-container center">
+                <div class="left-image-container extra-padding">
+                    <a href="https://litmaps.co">
+                        <img class="left-image" src="/images/litmaps_demo.gif"/>
+                    </a>
+                </div>
+            </div>
+            <div id="litmaps" class="right-container">
+                <h2><span class="hover-animation"><a href="https://litmaps.co">Litmaps</a></span></h2>
+                <p>Litmaps is an early stage startup which builds tools for visualising and discovering scientific papers.</p>
+                <p>This involved finding visualisation use-cases, designing algorithms to achieve visualisation objectives, implementing these algorithms in performant javascript, and setting up any necessary backend using FastAPI and Python.</p>
+                <p>I coded the visualisation logic currently in production. More details can be found <a href="https://www.litmaps.co/blog/posts/guide-to-litmaps-visualisations">here</a>.</p>
+            </div>
 
-          </div>
         </div>
-    </div>
-  </body>
+    </body>
 </html>

@@ -142,14 +142,20 @@ a {
     grid-template-columns: 1fr;
 }
 
+@media screen and (min-width: 800px) {
+    .img-txt-grid {
+        padding: 0px 75px;
+        grid-template-columns: 1fr 2fr;
+    }
+}
+
 .left-container {
     float: right;
     padding: 30px 30px;
-    max-width: 100%;
 }
 
 .extra-padding {
-    padding: 40px 40px;
+    padding: 0px 0px;
 }
 
 .right-container {
@@ -164,7 +170,7 @@ a {
 
 .left-image {
     max-height: 300px;
-    max-width: 300px;
+    max-width: min(300px, 100%);
 }
 
 .cols-2-degs {
@@ -174,10 +180,6 @@ a {
 }
 
 @media screen and (min-width: 800px) {
-    .img-txt-grid {
-        padding: 0px 0px;
-        grid-template-columns: 1fr 2fr;
-    }
     .left-image-container {
         height: 300px;
     }
