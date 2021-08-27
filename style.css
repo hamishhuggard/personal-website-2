@@ -138,6 +138,11 @@ a {
 /*              IMAGES                   */
 /* ------------------------------------- */
 
+.reversed > img {
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+}
+
 .img-txt-grid {
     padding: 0px 0px;
     display: grid;

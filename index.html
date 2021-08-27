@@ -6,12 +6,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <meta charset="UTF-8">
         <link rel="shortcut icon" type="image/ico" href="/images/favicon.ico"/>
+        <script>
+            function reverseImage(div) {
+                var className = div.getAttribute("class");
+                console.log("reverse")
+                if(className=="normal") {
+                    div.className = "reversed";
+                } else {
+                    div.className = "normal";
+                }
+            }
+        </script>
     </head>
     <body>
         <div class="center" style="height: 100vh;">
             <div>
                 <div class="center">
-                    <img class="home-animation" src="/images/wiggly_dancing_guy.gif"/>
+                    <div id="div" class="normal" onclick="reverseImage(this)">
+                        <img class="home-animation" src="/images/wiggly_dancing_guy.gif"/>
+                    </div>
                 </div>
                 <div class="center-text">
                     <h1>Hamish Huggard</h1>
