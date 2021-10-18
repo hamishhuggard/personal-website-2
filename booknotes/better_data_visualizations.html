@@ -9,6 +9,12 @@
 
         <style>
 
+            @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap');
+
+            * {
+                font-family: 'Quicksand', sans-serif;
+            }
+
             body {
                 display: grid;
                 justify-content: center;
@@ -30,6 +36,39 @@
             img {
                 width: 100%;
             }
+            
+			/* ------------------------------------- */
+			/*               LINKS                   */
+			/* ------------------------------------- */
+
+			a {
+				color: grey;
+				text-decoration: none;
+			}
+
+			a {
+			  display: inline-block;
+			  position: relative;
+			  color: grey;
+			}
+
+			a:after {
+			  content: '';
+			  position: absolute;
+			  width: 100%;
+			  transform: scaleX(0);
+			  height: 2px;
+			  bottom: 0;
+			  left: 0;
+			  background-color: grey;
+			  transform-origin: bottom right;
+			  transition: transform 0.25s ease-out;
+			}
+
+			a:hover:after {
+			  transform: scaleX(1);
+			  transform-origin: bottom left;
+			}
 
         </style>
 
@@ -42,6 +81,8 @@
         -->
 
         <main>
+
+			<a href="/">Home</a>
 
             <h1>Notes from <i>Better Data Visualizations</i></h1>
 
