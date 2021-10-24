@@ -13,6 +13,11 @@
     font-family: 'Quicksand', sans-serif;
 }
 
+.darkmode {
+    background-color: black;
+    filter: invert() hue-rotate(180deg) brightness(100%) contrast(105%);
+}
+
 .center-text {
     margin: 0 auto;
     text-align: center;
