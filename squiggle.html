@@ -69,6 +69,39 @@
                 }
             }
 
+            function makeLine(
+                canvasName,
+                x0, y0, x1, y1
+            ) {
+                var intervalID = window.setInterval(myCallback2, 150);
+                function myCallback2() {
+                    let canvas = document.getElementById("wobble-line");
+                    const getNoise = () => Math.round( (Math.random() - 0.5) * 10 );
+                    const coords = [
+                        [10, 10], 
+                        [10, 110], 
+                        [10, 210], 
+                    ];
+                    const noisyCoords = [];
+                    let noisyCoord;
+                    for (let coord of coords) {
+                        noisyCoord = [];
+                        for (let ord of coord) {
+                            noisyCoord.push( ord + getNoise() );
+                        }
+                        noisyCoords.push( noisyCoord );
+                    }
+                    let d = [ 
+                        'M', 
+                        ...noisyCoords[0],
+                        'Q',
+                        ...noisyCoords[1],
+                        ...noisyCoords[2]
+                    ].join(' ');
+                    canvas.setAttribute("d", d);
+                }
+            }
+
             makeCircle(
                 "head",
                 20, 20, 220, 220
@@ -81,128 +114,6 @@
                 "right-eye",
                 130, 120, 150, 140
             );
-
-            <!-- Bezier Circle -->
-
-            <!--
-            var intervalID = window.setInterval(myCallback5, 150);
-            function myCallback5() {
-                let canvas = document.getElementById("bezier-circle");
-                const c = 0.552
-                const smallCircle = [
-                    'M', 0, -1,
-                    'C', -c, -1, -1, -c, -1, 0,
-                    'S', -c, 1, 0, 1,
-                    'S', 1, c, 1, 0,
-                    'S', c, -1, 0, -1,
-                    'S', -1, -c, -1, 0,
-                ]
-                const dArray = smallCircle.map((x) => {
-                    if (typeof(x)==='number') return x*100 + 120
-                    else return x
-                })
-                const noisyDArray = addNoiseToD( dArray )
-                canvas.setAttribute("d", noisyDArray.join(' '));
-            }
-            -->
-
-            <!-- Triangle Circle -->
-
-            var intervalID = window.setInterval(myCallback4, 150);
-            function myCallback4() {
-                let canvas = document.getElementById("triangle-circle");
-                const dArray = [
-                    'M', 110, 10, 
-                    'Q', 210, 10, 160, 122, 
-                    'Q', 110, 183, 60, 122, 
-                    'Q', 10, 10, 110, 10,
-                ];
-                const noisyDArray = addNoiseToD( dArray )
-                canvas.setAttribute("d", noisyDArray.join(' '));
-            }
-
-            <!-- Circle -->
-
-            var intervalID = window.setInterval(myCallback3, 150);
-            function myCallback3() {
-                let canvas = document.getElementById("circle");
-                const dArray = [
-                    'M', 110, 10, 
-                    'Q', 210, 10, 210, 110, 
-                    'Q', 210, 210, 110, 210, 
-                    'Q', 10, 210, 10, 110, 
-                    'Q', 10, 10, 110, 10, 
-                ];
-                const noisyDArray = addNoiseToD( dArray )
-                canvas.setAttribute("d", noisyDArray.join(' '));
-            }
-
-            <!-- Squirmy Line -->
-
-            var intervalID = window.setInterval(myCallback2, 150);
-
-            function myCallback2() {
-
-                let canvas = document.getElementById("wobble-line");
-
-                const getNoise = () => Math.round( (Math.random() - 0.5) * 10 );
-
-                const coords = [
-                    [10, 10], 
-                    [10, 110], 
-                    [10, 210], 
-                ];
-
-                const noisyCoords = [];
-                let noisyCoord;
-                for (let coord of coords) {
-                    noisyCoord = [];
-                    for (let ord of coord) {
-                        noisyCoord.push( ord + getNoise() );
-                    }
-                    noisyCoords.push( noisyCoord );
-                }
-
-                let d = [ 
-                    'M', 
-                    ...noisyCoords[0],
-                    'Q',
-                    ...noisyCoords[1],
-                    ...noisyCoords[2]
-                ].join(' ');
-
-                canvas.setAttribute("d", d);
-            }
-
-            <!-- Joint -->
-
-            var intervalID = window.setInterval(myCallback, 150);
-
-            function myCallback() {
-                let canvas = document.getElementById("line");
-
-                const getNoise = () => Math.round( (Math.random() - 0.5) * 10 );
-
-                const coords = [
-                    [10, 10], 
-                    [10, 200], 
-                    [200, 200],
-                ];
-
-                let d = ''
-                let firstCoord = true;
-                for (let coord of coords) {
-                    noisyCoord = [];
-                    for (let ord of coord) {
-                        noisyCoord.push( ord + getNoise() );
-                    }
-                    let command = firstCoord ? 'M' : 'L';
-                    firstCoord = false;
-                    d = d + ' ' + command + noisyCoord.join(' ');
-                }
-
-                canvas.setAttribute("d", d);
-            }
 
         </script>
     </head>
@@ -217,31 +128,6 @@
                         <path id="right-eye" />
                     </svg>
 
-                    <svg viewBox="0 0 300 300">
-                        <path id="bezier-circle" />
-                    </svg>
-
-                    <svg viewBox="0 0 300 300">
-                        <path id="triangle-circle" />
-                    </svg>
-
-                    <svg viewBox="0 0 300 300">
-                        <path id="circle" />
-                    </svg>
-
-                    <svg viewBox="0 0 300 300">
-                        <path id="wobble-line" />
-                    </svg>
-
-                    <svg viewBox="0 0 300 300">
-                        <path id="line" />
-                    </svg>
-
-                    <!--
-                    <canvas id="canvas" width="300" height="300">
-                        <canvas x1="0" y1="0" x2="200" y2="200" style="stroke:rgb(0,0,0);stroke-width:6" /> 
-                    </canvas>
-                    -->
                     <div id="div" class="normal" onclick="reverseImage(this)">
                         <img alt="Click me!" class="home-animation" src="/images/wiggly_dancing_guy.gif"/>
                     </div>
