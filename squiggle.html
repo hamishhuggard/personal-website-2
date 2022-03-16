@@ -127,6 +127,35 @@
                 "right-eye",
                 130, 120, 150, 140
             );
+            */
+            makeDisk(
+                "left-eye",
+                40, 130, 20
+            );
+            makeDisk(
+                "right-eye",
+                140, 130, 20
+            );
+            makePolyLine(
+                "body",
+                [70, 210, 70, 300, 170, 300, 170, 210]
+            );
+            makePolyLine(
+                "left-leg",
+                [70, 300, 70, 350]
+            );
+            makePolyLine(
+                "right-leg",
+                [170, 300, 170, 350]
+            );
+            makePolyLine(
+                "left-arm",
+                [70, 210, 20, 250]
+            );
+            makePolyLine(
+                "right-arm",
+                [170, 210, 220, 250]
+            );
 
         </script>
     </head>
@@ -135,10 +164,19 @@
             <div>
                 <div class="center">
 
-                    <svg viewBox="0 0 300 300">
+                    <svg viewBox="0 0 300 500">
                         <path id="head" />
+                        <circle id="left-eye" />
+                        <circle id="right-eye" />
+                        <!--
                         <path id="left-eye" />
                         <path id="right-eye" />
+                        -->
+                        <path id="body" />
+                        <path id="left-leg" />
+                        <path id="right-leg" />
+                        <path id="left-arm" />
+                        <path id="right-arm" />
                     </svg>
 
                     <div id="div" class="normal" onclick="reverseImage(this)">
