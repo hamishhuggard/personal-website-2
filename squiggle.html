@@ -42,10 +42,10 @@
                 var intervalID = window.setInterval(myCallback, 150);
                 function myCallback() {
                     let canvas = document.getElementById(canvasName);
-                    x = x + makeNoise()
-                    y = y + makeNoise()
-                    canvas.setAttribute("cx", x);
-                    canvas.setAttribute("cy", y);
+                    const noisyX = x + makeNoise()
+                    const noisyY = y + makeNoise()
+                    canvas.setAttribute("cx", noisyX);
+                    canvas.setAttribute("cy", noisyY);
                     canvas.setAttribute("r", radius);
                 }
             }
