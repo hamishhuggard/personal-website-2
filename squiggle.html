@@ -35,6 +35,20 @@
                 return noisyD;
             }
 
+            function makeDisk(
+                canvasName,
+                x, y, radius
+            ) {
+                var intervalID = window.setInterval(myCallback, 150);
+                function myCallback() {
+                    let canvas = document.getElementById(canvasName);
+                    x = x + makeNoise()
+                    y = y + makeNoise()
+                    canvas.setAttribute("cx", x);
+                    canvas.setAttribute("cy", y);
+                    canvas.setAttribute("r", radius);
+                }
+            }
             function makeCircle(
                 canvasName,
                 x0, y0, x1, y1
