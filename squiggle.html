@@ -35,12 +35,11 @@
                 return noisyD;
             }
 
-            function makeDisk(
+            function getDiskUpdater(
                 canvasName,
                 x, y, radius
             ) {
-                var intervalID = window.setInterval(myCallback, 150);
-                function myCallback() {
+                return () => {
                     let canvas = document.getElementById(canvasName);
                     const noisyX = x + makeNoise()
                     const noisyY = y + makeNoise()
@@ -50,12 +49,11 @@
                 }
             }
 
-            function makePolyLine(
+            function getPolyLineUpdater(
                 canvasName,
                 coords
             ) {
-                var intervalID = window.setInterval(myCallback, 150);
-                function myCallback() {
+                return () => {
                     let canvas = document.getElementById(canvasName);
                     let dArray = [ 
                         'M', 
@@ -80,12 +78,11 @@
                 }
             }
 
-            function makeCircle(
+            function getCircleUpdater(
                 canvasName,
                 x0, y0, x1, y1
             ) {
-                var intervalID = window.setInterval(myCallback, 150);
-                function myCallback() {
+                return () => {
                     let canvas = document.getElementById(canvasName);
                     const c = 0.552;
                     const smallCircle = [
@@ -114,48 +111,51 @@
                 }
             }
 
-            makeCircle(
-                "head",
-                20, 20, 220, 220
-            );
-            /*
-            makeCircle(
-                "left-eye",
-                30, 120, 50, 140
-            );
-            makeCircle(
-                "right-eye",
-                130, 120, 150, 140
-            );
-            */
-            makeDisk(
-                "left-eye",
-                40, 130, 20
-            );
-            makeDisk(
-                "right-eye",
-                140, 130, 20
-            );
-            makePolyLine(
-                "body",
-                [70, 210, 70, 300, 170, 300, 170, 210]
-            );
-            makePolyLine(
-                "left-leg",
-                [70, 300, 70, 350]
-            );
-            makePolyLine(
-                "right-leg",
-                [170, 300, 170, 350]
-            );
-            makePolyLine(
-                "left-arm",
-                [70, 210, 20, 250]
-            );
-            makePolyLine(
-                "right-arm",
-                [170, 210, 220, 250]
-            );
+            const updaters = {
+                'head': getCircleUpdater(
+                    "head",
+                    20, 20, 220, 220
+                ),
+                'leftEye': getDiskUpdater(
+                    "left-eye",
+                    40, 130, 15
+                ),
+                "right-eye": getDiskUpdater(
+                    "right-eye",
+                    140, 130, 17
+                ),
+                "body": getPolyLineUpdater(
+                    "body",
+                    [70, 210, 70, 300, 170, 300, 170, 210]
+                ),
+                "left-leg": getPolyLineUpdater(
+                    "left-leg",
+                    [70, 300, 70, 350]
+                ),
+                "right-leg": getPolyLineUpdater(
+                    "right-leg",
+                    [170, 300, 170, 350]
+                ),
+                "left-arm": getPolyLineUpdater(
+                    "left-arm",
+                    [70, 210, 20, 250]
+                ),
+                "right-arm": getPolyLineUpdater(
+                    "right-arm",
+                    [170, 210, 220, 250]
+                ),
+            }
+
+            var intervalID = window.setInterval(updateCanvas, 150);
+
+            function updateCanvas() {
+                for (let updater of Object.values(updaters)) {
+                    updater();
+                }
+            }
+
+
+
 
         </script>
     </head>
