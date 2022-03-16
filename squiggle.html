@@ -49,6 +49,37 @@
                     canvas.setAttribute("r", radius);
                 }
             }
+
+            function makePolyLine(
+                canvasName,
+                coords
+            ) {
+                var intervalID = window.setInterval(myCallback, 150);
+                function myCallback() {
+                    let canvas = document.getElementById(canvasName);
+                    let dArray = [ 
+                        'M', 
+                        coords[0],
+                        coords[1],
+                    ]
+                    let x0, x1, x2, y0, y1, y2;
+                    for (let i=0; i<coords.length-2; i = i+2) {
+                        x0 = coords[i];
+                        y0 = coords[i+1];
+                        x2 = coords[i+2];
+                        y2 = coords[i+3];
+
+                        x1 = Math.round(x0 + (x2 - x0)/2);
+                        y1 = Math.round(y0 + (y2 - y0)/2);
+
+                        dArray.push('Q');
+                        dArray.push(x1, y1, x2, y2);
+                    }
+                    const noisyDArray = addNoiseToD( dArray )
+                    canvas.setAttribute("d", noisyDArray.join(' '));
+                }
+            }
+
             function makeCircle(
                 canvasName,
                 x0, y0, x1, y1
@@ -83,43 +114,11 @@
                 }
             }
 
-            function makeLine(
-                canvasName,
-                x0, y0, x1, y1
-            ) {
-                var intervalID = window.setInterval(myCallback2, 150);
-                function myCallback2() {
-                    let canvas = document.getElementById("wobble-line");
-                    const getNoise = () => Math.round( (Math.random() - 0.5) * 10 );
-                    const coords = [
-                        [10, 10], 
-                        [10, 110], 
-                        [10, 210], 
-                    ];
-                    const noisyCoords = [];
-                    let noisyCoord;
-                    for (let coord of coords) {
-                        noisyCoord = [];
-                        for (let ord of coord) {
-                            noisyCoord.push( ord + getNoise() );
-                        }
-                        noisyCoords.push( noisyCoord );
-                    }
-                    let d = [ 
-                        'M', 
-                        ...noisyCoords[0],
-                        'Q',
-                        ...noisyCoords[1],
-                        ...noisyCoords[2]
-                    ].join(' ');
-                    canvas.setAttribute("d", d);
-                }
-            }
-
             makeCircle(
                 "head",
                 20, 20, 220, 220
             );
+            /*
             makeCircle(
                 "left-eye",
                 30, 120, 50, 140
