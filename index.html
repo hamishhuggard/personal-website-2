@@ -7,24 +7,203 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <meta charset="UTF-8">
         <link rel="shortcut icon" type="image/ico" href="/images/favicon.ico"/>
+        <style>
+        svg path {
+            fill: none;
+            stroke: #000;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 15;
+            /* transition: 0.2s; */
+        }
+        </style>
         <script>
-            function reverseImage(div) {
-                var className = div.getAttribute("class");
-                if(className=="normal") {
-                    div.className = "reversed";
-                } else {
-                    div.className = "normal";
+
+            function makeNoise() {
+                return Math.round( (Math.random() - 0.5) * 10 );
+            }
+
+            function addNoiseToD(dArray) {
+                const noisyD = [];
+                for (let di of dArray) {
+                    if (typeof(di)==='number') {
+                        noisyD.push( di + makeNoise() );
+                    } else {
+                        noisyD.push( di );
+                    }
+                }
+                return noisyD;
+            }
+
+            function getDiskUpdater(
+                canvasName,
+                x, y, radius
+            ) {
+                return () => {
+                    let canvas = document.getElementById(canvasName);
+                    const noisyX = x + makeNoise()
+                    const noisyY = y + makeNoise()
+                    canvas.setAttribute("cx", noisyX);
+                    canvas.setAttribute("cy", noisyY);
+                    canvas.setAttribute("r", radius);
                 }
             }
+
+            function getPolyLineUpdater(
+                canvasName,
+                coords
+            ) {
+                return () => {
+                    let canvas = document.getElementById(canvasName);
+                    let dArray = [ 
+                        'M', 
+                        coords[0],
+                        coords[1],
+                    ]
+                    let x0, x1, x2, y0, y1, y2;
+                    for (let i=0; i<coords.length-2; i = i+2) {
+                        x0 = coords[i];
+                        y0 = coords[i+1];
+                        x2 = coords[i+2];
+                        y2 = coords[i+3];
+
+                        x1 = Math.round(x0 + (x2 - x0)/2);
+                        y1 = Math.round(y0 + (y2 - y0)/2);
+
+                        dArray.push('Q');
+                        dArray.push(x1, y1, x2, y2);
+                    }
+                    const noisyDArray = addNoiseToD( dArray )
+                    canvas.setAttribute("d", noisyDArray.join(' '));
+                }
+            }
+
+            function getCircleUpdater(
+                canvasName,
+                x0, y0, x1, y1
+            ) {
+                return () => {
+                    let canvas = document.getElementById(canvasName);
+                    const c = 0.552;
+                    const smallCircle = [
+                        'M', 0, -1,
+                        'C', -c, -1, -1, -c, -1, 0,
+                        'S', -c, 1, 0, 1,
+                        'S', 1, c, 1, 0,
+                        'S', c, -1, 0, -1,
+                        'S', -1, -c, -1, 0,
+                    ];
+                    let isX = true;
+                    const dArray = smallCircle.map((x) => {
+                        if (typeof(x)!=='number') {
+                            isX = true;
+                            return x
+                        } else if (isX) { 
+                            isX = false;
+                            return (x + 1) / 2 * (x1-x0) + x0;
+                        } else {
+                            isX = true;
+                            return (x + 1) / 2 * (y1-y0) + y0;
+                        }
+                    })
+                    const noisyDArray = addNoiseToD( dArray )
+                    canvas.setAttribute("d", noisyDArray.join(' '));
+                }
+            }
+
+            const updaters = {
+                'head': getCircleUpdater(
+                    "head",
+                    20, 20, 220, 220
+                ),
+                'leftEye': getDiskUpdater(
+                    "left-eye",
+                    40, 130, 15
+                ),
+                "right-eye": getDiskUpdater(
+                    "right-eye",
+                    140, 130, 17
+                ),
+                "body": getPolyLineUpdater(
+                    "body",
+                    [70, 210, 70, 300, 170, 300, 170, 210]
+                ),
+                "left-leg": getPolyLineUpdater(
+                    "left-leg",
+                    [70, 300, 70, 350]
+                ),
+                "right-leg": getPolyLineUpdater(
+                    "right-leg",
+                    [170, 300, 170, 350]
+                ),
+                "left-arm": getPolyLineUpdater(
+                    "left-arm",
+                    [70, 210, 20, 250]
+                ),
+                "right-arm": getPolyLineUpdater(
+                    "right-arm",
+                    [170, 210, 220, 250]
+                ),
+            }
+
+            var intervalID = window.setInterval(updateCanvas, 150);
+
+            function updateCanvas() {
+                for (let updater of Object.values(updaters)) {
+                    updater();
+                }
+            }
+
+
+
+            window.addEventListener("mousemove", (e) => {
+                e = e || window.event;
+
+                //Position of cursor in pixel
+                const { pageX, pageY } = e;
+
+                //Available area of window
+                const { innerWidth, innerHeight } = window;
+
+                const x = pageX - innerWidth / 2;
+                const y = pageY - innerHeight / 2;
+                const angle = x===0 ? (y<0 ? -Math.PI/2 : Math.PI/2) : Math.atan( y / x );
+                const frac = Math.sqrt( (2*x/innerWidth)**2 + (2*y/innerHeight)**2 );
+
+                const headRadius = 50;
+                const maxX = innerWidth / 2;
+                const maxY = innerHeight / 2;
+                const eyeX = 120 + (pageX - maxX)/maxX * headRadius;
+                const eyeY = 120 + (pageY - maxY)/maxY * headRadius;
+
+                updaters['leftEye'] = getDiskUpdater(
+                    "left-eye",
+                    eyeX - 30, eyeY, 15
+                    // 40, 130, 15
+                )
+                updaters['rightEye'] = getDiskUpdater(
+                    "right-eye",
+                    eyeX + 30, eyeY, 15
+                    // 140, 130, 15
+                )
+            });
+
         </script>
     </head>
     <body>
         <div class="center" style="height: 100vh;">
             <div>
-                <div class="center">
-                    <div id="div" class="normal" onclick="reverseImage(this)">
-                        <img alt="Click me!" class="home-animation" src="/images/wiggly_dancing_guy.gif"/>
-                    </div>
+                <div class="center" width=300 height=300>
+                    <svg height=380>
+                        <path id="head" />
+                        <circle id="left-eye" />
+                        <circle id="right-eye" />
+                        <path id="body" />
+                        <path id="left-leg" />
+                        <path id="right-leg" />
+                        <path id="left-arm" />
+                        <path id="right-arm" />
+                    </svg>
                 </div>
                 <div class="center-text">
                     <h1>Hamish Huggard</h1>
@@ -34,12 +213,6 @@
                     <h2><span class="hover-animation"><a href="/data_viz">Data Visualisation</span></a></h2>
                     <h2><span class="hover-animation"><a href="/research">Research</span></a></h2>
                 </div>
-                    <!--
-                    <div class="grid-2-cols center-text">
-                    <h3><a href="https://github.com/hamishhuggard">Github</a></h2>
-                    <h3><a href="https://www.linkedin.com/in/hamish-huggard-572b45123/">LinkedIn</a></h2>
-                    </div>
-                    -->
             </div>
         </div>
     </body>
