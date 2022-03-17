@@ -159,21 +159,21 @@
                 e = e || window.event;
 
                 //Position of cursor in pixel
-                const { pageX, pageY } = e;
+                const { cursorX, cursorY } = e;
 
                 //Available area of window
                 const { innerWidth, innerHeight } = window;
 
-                const x = pageX - innerWidth / 2;
-                const y = pageY - innerHeight / 2;
-                const angle = x===0 ? (y<0 ? -Math.PI/2 : Math.PI/2) : Math.atan( y / x );
-                const frac = Math.sqrt( (2*x/innerWidth)**2 + (2*y/innerHeight)**2 );
+                const headCoords = document.getElementById("head").getBoundingClientRect();
+                const headX = ( headCoords.right + headCoords.left ) / 2
+                const headY = ( headCoords.bottom + headCoords.top ) / 2
+
+                const xMax = Math.max( innerWidth - headX, headX );
+                const yMax = Math.max( innerHeight - headY, headY );
 
                 const headRadius = 50;
-                const maxX = innerWidth / 2;
-                const maxY = innerHeight / 2;
-                const eyeX = 120 + (pageX - maxX)/maxX * headRadius;
-                const eyeY = 120 + (pageY - maxY)/maxY * headRadius;
+                const eyeX = 120 + (cursorX - headX)/xMax * headRadius;
+                const eyeY = 120 + (cursorY - headY)/yMax * headRadius;
 
                 updaters['leftEye'] = getDiskUpdater(
                     "left-eye",
