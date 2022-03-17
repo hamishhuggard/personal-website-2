@@ -158,12 +158,13 @@
             window.addEventListener("mousemove", (e) => {
                 e = e || window.event;
 
-                //Position of cursor in pixel
-                const { cursorX, cursorY } = e;
+                // Cursor position
+                const { pageX, pageY } = e;
 
-                //Available area of window
+                // Window dimensions
                 const { innerWidth, innerHeight } = window;
 
+                // Head position
                 const headCoords = document.getElementById("head").getBoundingClientRect();
                 const headX = ( headCoords.right + headCoords.left ) / 2
                 const headY = ( headCoords.bottom + headCoords.top ) / 2
@@ -172,8 +173,8 @@
                 const yMax = Math.max( innerHeight - headY, headY );
 
                 const headRadius = 50;
-                const eyeX = 120 + (cursorX - headX)/xMax * headRadius;
-                const eyeY = 120 + (cursorY - headY)/yMax * headRadius;
+                const eyeX = 120 + (pageX - headX)/xMax * headRadius;
+                const eyeY = 120 + (pageY - headY)/yMax * headRadius;
 
                 updaters['leftEye'] = getDiskUpdater(
                     "left-eye",
