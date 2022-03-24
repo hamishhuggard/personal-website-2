@@ -154,8 +154,10 @@
             }
 
 
+            // Track cursor with eyes
 
             window.addEventListener("mousemove", (e) => {
+
                 e = e || window.event;
 
                 // Cursor position
@@ -166,30 +168,42 @@
 
                 // Head position
                 const headCoords = document.getElementById("head").getBoundingClientRect();
-                const headX = ( headCoords.right + headCoords.left ) / 2
-                const headY = ( headCoords.bottom + headCoords.top ) / 2
+                const headX = ( headCoords.right + headCoords.left ) / 2;
+                const headY = ( headCoords.bottom + headCoords.top ) / 2;
 
-                const xMax = Math.max( innerWidth - headX, headX );
-                const yMax = Math.max( innerHeight - headY, headY );
+                // Imaginary distance in z-axis between squiggle man and screen
+                const zDist = Math.max( innerWidth, innerHeight ) / 2;
 
-                const headRadius = 50;
-                const eyeX = 120 + (pageX - headX)/xMax * headRadius;
-                const eyeY = 120 + (pageY - headY)/yMax * headRadius;
+                // Pitch and yaw of head
+                const angleX = Math.atan( (pageX - headX) / zDist );
+                const angleY = Math.atan( (pageY - headY) / zDist );
+
+                const headRadius = 100;
+                const eyeLeftX = headRadius * Math.sin( angleX - Math.PI/10 );
+                const eyeRightX = headRadius * Math.sin( angleX + Math.PI/10 );
+                const eyeLeftY = Math.sqrt(headRadius**2 - eyeLeftX**2) * Math.sin( angleY );
+                const eyeRightY = Math.sqrt(headRadius**2 - eyeRightX**2) * Math.sin( angleY );
+
+                // Origin in SVG coords
+                const originX = 120;
+                const originY = 120;
 
                 updaters['leftEye'] = getDiskUpdater(
                     "left-eye",
-                    eyeX - 30, eyeY, 15
+                    originX + eyeLeftX, 
+                    originY + eyeLeftY, 
+                    15
                 )
+
                 updaters['rightEye'] = getDiskUpdater(
                     "right-eye",
-                    eyeX + 30, eyeY, 15
+                    originX + eyeRightX, 
+                    originY + eyeRightY, 
+                    15
                 )
+
             });
 
-            function play() {
-                var audio = document.getElementById("audio");
-                audio.play();
-            }
         </script>
     </head>
     <body>
@@ -207,7 +221,11 @@
                         <path id="right-arm" />
                     </svg>
                 </div>
-                <audio id="audio" src="https://www.myinstants.com/media/sounds/anime-wow-sound-effect.mp3"></audio>
+                <div class="center" width=300 height=50>
+                    <svg height=50 width=300>
+                        <path id="hamish-huggard" />
+                    </svg>
+                </div>
                 <div class="center-text">
                     <h1>Hamish Huggard</h1>
                 </div>
