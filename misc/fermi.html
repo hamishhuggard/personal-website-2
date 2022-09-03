@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<script src="https://d3js.org/d3.v4.js"></script>
+
+</head>
+<body>
+
+<h1>Cumulative Distribution of the Number of Civilizations in the Milky Way</h1>
+<div>Based on a calculation from <a href="https://arxiv.org/abs/1806.02404"><i>Dissolving the Fermi Paradox</i></a> using code modified from <a href="https://forum.effectivealtruism.org/posts/vh3YvCKnCBp6jDDFd/?commentId=xrRrvGLM5d5XuDFfy">this</a> forum post.</div>
+<div>Hover over points for specific values. Drag to zoom. Double click to unzoom.</div>
+<div id="my_dataviz"></div>
+<div id="summary_stats" style="display: grid; grid-template-columns: repeat(11, 1fr); width: 100px; grid-column-gap: 20px;"></div>
+
+
+<script>
+
+const uniform = (a, b) => Math.random()*(b-a) + a;
+const log = Math.log;
+const exp = Math.exp;
+
+const compFormatter = new Intl.NumberFormat('en', {notation: 'compact'});
+const sciFormatter = new Intl.NumberFormat('en', {notation: 'scientific', maximumSignificantDigits: 3});
+function formatNum(n) {
+    const n1 = compFormatter.format(n);
+    const n2 = sciFormatter.format(n).replace('E','e');
+    return n1.length < n2.length ? n1 : n2;
+}
+
+// based on code from: https://forum.effectivealtruism.org/posts/vh3YvCKnCBp6jDDFd/?commentId=xrRrvGLM5d5XuDFfy
+
+const loguniform = (a, b) => exp(uniform(log(a), log(b)));
+
+const expectedCivs = () => {
+
+    // Estimates
+    const rate_of_star_formation = loguniform(1, 100);
+    const fraction_of_stars_with_planets = loguniform(0.1, 1);
+    const number_of_habitable_planets_per_star_system = loguniform(0.1, 1);
+    const fraction_of_habitable_planets_in_which_any_life_appears = 1;
+    // ^ more on this below
+    const fraction_of_planets_with_life_in_which_intelligent_life_appears = loguniform(0.001, 1);
+    const fraction_of_intelligent_planets_which_are_detectable_as_such = loguniform(0.01, 1);
+    const longevity_of_detectable_civilizations = loguniform(100, 10000000000);
+
+    // Expected number of civilizations in the Milky way;
+    // see footnote 3 (p. 5)
+    return rate_of_star_formation *
+      fraction_of_stars_with_planets *
+      number_of_habitable_planets_per_star_system *
+      fraction_of_habitable_planets_in_which_any_life_appears *
+      fraction_of_planets_with_life_in_which_intelligent_life_appears *
+      fraction_of_intelligent_planets_which_are_detectable_as_such *
+      longevity_of_detectable_civilizations;
+}
+
+const nSamples = 50;
+const civsSample = Array.from({length: nSamples}, expectedCivs);
+civsSample.sort(function(a, b){return a - b});
+
+const xMin = civsSample[0];
+const xMax = civsSample[civsSample.length-1];
+
+// create an array of objects like {
+//  civs: number of civilisations, 
+//  cumProb: cumulative probability of at most this many civilisations
+// }
+const sampleData = civsSample.map((civs,i) => {return {civs, cumProb: i/nSamples}});
+
+const mean = array => array.reduce((a, b) => a + b) / array.length;
+const std = array => {
+    const mu = mean(array);
+    const variance = mean( array.map(x => (x-mu)*(x-mu)) )
+    return Math.sqrt(variance)
+}
+function percentile(array, p) { 
+    return array[ Math.floor(array.length * p / 100) ]
+};
+
+const summaryStats = {
+    mean: mean(civsSample),
+    std: std(civsSample),
+    min: xMin,
+};
+
+for (let p of [5, 10, 25, 50, 75, 90, 95]) {
+    summaryStats[`${p}%`] = percentile(civsSample, p);
+}
+summaryStats['max'] = xMax;
+
+const summaryStatsArray = []
+for (let stat in summaryStats) { summaryStatsArray.push(stat) }
+for (let stat in summaryStats) { summaryStatsArray.push(formatNum(summaryStats[stat])) }
+d3.select("#summary_stats")
+  .selectAll("div")
+  .data(summaryStatsArray)
+  .enter()
+  .append('div')
+  .text(d => d);
+</script>
+
+<script>
+// The following code is mostly copied from:
+// - https://d3-graph-gallery.com/graph/scatter_tooltip.html
+// - https://d3-graph-gallery.com/graph/interactivity_brush.html#brushingforzoom
+
+
+// set the dimensions and margins of the graph
+var margin = {top: 10, right: 30, bottom: 30, left: 60},
+    width = 460 - margin.left - margin.right,
+    height = 400 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+var svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
+
+// Add X axis
+var x = d3.scaleLog()
+    .domain([xMin, xMax])
+    .range([0, width]);
+var xAxis = svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x));
+
+// Add Y axis
+var y = d3.scaleLinear()
+    .domain([0, 1])
+    .range([height, 0]);
+svg.append("g")
+    .call(d3.axisLeft(y));
+
+// Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
+// Its opacity is set to 0: we don't see it by default.
+var tooltip = d3.select("#my_dataviz")
+    .append("div")
+    .style("opacity", 0)
+    .attr("class", "tooltip")
+    .style("background-color", "white")
+    .style("position", "absolute")
+    .style("border", "solid")
+    .style("border-width", "1px")
+    .style("border-radius", "5px")
+    .style("padding", "10px")
+    .style("z-index", "-1")
+
+// A function that change this tooltip when the user hover a point.
+// Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
+var mouseover = function(d) {
+    tooltip
+      .style("opacity", 1)
+}
+
+
+var mousemove = function(d) {
+    tooltip
+      .html(`Pr(number of civilisations < ${formatNum(d.civs)}) = ${formatNum(d.cumProb)}`)
+      .style("left", (d3.mouse(this)[0]+90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+      .style("top", (d3.mouse(this)[1]) + "px")
+}
+
+// A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+var mouseleave = function(d) {
+    tooltip
+      .transition()
+      .duration(200)
+      .style("opacity", 0)
+}
+
+
+// Add a clipPath: everything out of this area won't be drawn.
+var clip = svg.append("defs").append("svg:clipPath")
+  .attr("id", "clip")
+  .append("svg:rect")
+  .attr("width", width )
+  .attr("height", height )
+  .attr("x", 0)
+  .attr("y", 0);
+
+// Add brushing
+var brush = d3.brushX()                 // Add the brush feature using the d3.brush function
+  .extent( [ [0,0], [width,height] ] ) // initialise the brush area: start at 0,0 and finishes at width,height: it means I select the whole graph area
+  .on("end", updateChart) // Each time the brush selection changes, trigger the 'updateChart' function
+
+// Create the scatter variable: where both the circles and the brush take place
+var scatter = svg.append('g')
+	.attr("clip-path", "url(#clip)")
+
+// Add the brushing
+scatter
+	.append("g")
+	.attr("class", "brush")
+	.call(brush);
+
+
+// Add circles
+scatter
+	.selectAll("circle")
+	.data(sampleData)
+	.enter()
+	.append("circle")
+		.attr("cx", function (d) { return x(d.civs); } )
+		.attr("cy", function (d) { return y(d.cumProb); } )
+		.attr("r", 7)
+		.style("fill", "#69b3a2")
+		.style("opacity", 0.3)
+		.style("stroke", "white")
+		.on("mouseover", mouseover )
+		.on("mousemove", mousemove )
+		.on("mouseleave", mouseleave )
+
+
+// A function that set idleTimeOut to null
+var idleTimeout
+function idled() { idleTimeout = null; }
+
+// A function that update the chart for given boundaries
+function updateChart() {
+
+	extent = d3.event.selection
+
+	// If no selection, back to initial coordinate. Otherwise, update X axis domain
+	if(!extent){
+	  if (!idleTimeout) return idleTimeout = setTimeout(idled, 350); // This allows to wait a little bit
+	  x.domain([xMin,xMax])
+	}else{
+	  x.domain([ x.invert(extent[0]), x.invert(extent[1]) ])
+	  scatter.select(".brush").call(brush.move, null) // This remove the grey brush area as soon as the selection has been done
+	}
+
+	// Update axis and circle position
+	xAxis.transition().duration(1000).call(d3.axisBottom(x))
+	scatter
+		.selectAll("circle")
+		.transition()
+		.duration(1000)
+		.attr("cx", function (d) { return x(d.civs); } )
+		.attr("cy", function (d) { return y(d.cumProb); } )
+}
+</script>
+</body>
+</html>
