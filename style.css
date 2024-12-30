@@ -26,6 +26,7 @@
 .grid-3-cols {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
 }
 
 .grid-2-cols {
