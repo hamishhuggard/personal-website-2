@@ -1,0 +1,155 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    /*
+    padding: 50px;
+    */
+    padding: 0px;
+    font-family: Arial, sans-serif;
+    background: #c2c2c2;
+    margin: 0px;
+}
+
+.page {
+    width: 210mm;
+    height: 297mm;
+    /*
+    margin: auto;
+    */
+    margin: 0px;
+    background: white;
+    border: 0px black solid;
+    box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.5);
+    padding: 20mm;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-top: -10mm;
+    margin-bottom: 5mm;
+}
+
+.profile-image {
+    width: 186px;
+    height: 150px;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 5px solid white;
+    margin-right: 15px;
+    z-index: 10;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.contact-info {
+    padding: 15px;
+    background-color: #f7b083;
+    border-radius: 40px;
+    border-radius: 0px 60px 60px 0px;
+    width: 100%;
+    margin-left: -20mm;
+    padding-left: calc(20mm + 15px);
+}
+
+.contact-info h1 {
+    font-size: 24px;
+    margin: 0;
+    color: #333;
+}
+
+.contact-info p {
+    margin: 5px 0;
+    color: #555;
+}
+
+.content {
+    display: flex;
+    margin-top: 5px;
+}
+
+.left-column {
+    width: calc(40% + 8mm);
+    padding-right: 8mm;
+    padding-top: 4mm;
+    padding-left: 20mm;
+    background: #e2e2e2;
+    margin-left: -20mm;
+    border-radius: 0 70px 0px 0;
+    height: 1000mm;
+}
+
+.right-column {
+    width: 70%;
+    padding-left: 10px;
+    padding-left: 7mm;
+    padding-top: 0mm;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #f7b083;
+    padding-bottom: 5px;
+}
+
+p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.skill {
+    margin-bottom: 10px;
+}
+
+.skill-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.skill-bar span {
+    display: block;
+    height: 100%;
+    background-color: #f7b083;
+}
+
+ul {
+    list-style: disc;
+    margin-left: 20px;
+    color: #555;
+}
+
+ul li {
+    margin-bottom: 5px;
+}
+
+.left-right {
+    display: flex;
+    justify-content: space-between;
+}
+
+.left-text {
+    text-align: left;
+}
+
+.right-text {
+    text-align: right;
+}
