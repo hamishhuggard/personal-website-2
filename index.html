@@ -21,13 +21,15 @@
             margin: 0;
             padding: 0;
             display: flex;
+            font-size: 16px;
+            line-height: 1.6;
         }
         
         .sidebar {
             position: fixed;
             left: 0;
             top: 0;
-            width: 250px;
+            width: 300px;
             height: 100vh;
             background: #f8f8f8;
             padding: 40px 20px;
@@ -36,8 +38,8 @@
         }
         
         .main-content {
-            margin-left: 250px;
-            width: calc(100% - 250px);
+            margin-left: 300px;
+            width: calc(100% - 300px);
             min-height: 100vh;
         }
         
@@ -49,9 +51,10 @@
         
         .nav-item {
             cursor: pointer;
-            padding: 10px 0;
-            margin: 5px 0;
+            padding: 12px 0;
+            margin: 8px 0;
             transition: all 0.3s ease;
+            font-size: 18px;
         }
         
         .nav-item:hover {
@@ -65,13 +68,153 @@
         }
         
         .section-title {
-            font-size: 2.5em;
+            font-size: 2.8em;
             margin-bottom: 40px;
             text-align: center;
         }
         
+        /* Animated character container */
+        .character-container {
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .character-container svg {
+            width: 100% !important;
+            height: auto !important;
+            max-width: 200px !important;
+            max-height: 250px !important;
+        }
+        
+        /* Circular profile photo */
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #333;
+            margin: 20px auto;
+            display: block;
+        }
+        
+        /* Resume styles */
+        .page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 30px;
+        }
+        
+        .profile-image {
+            flex-shrink: 0;
+        }
+        
+        .profile-image img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #333;
+        }
+        
+        .contact-info h1 {
+            font-size: 2.2em;
+            margin: 0 0 10px 0;
+        }
+        
+        .contact-info p {
+            font-size: 16px;
+            margin: 5px 0;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+        }
+        
+        .left-column, .right-column {
+            font-size: 16px !important;
+            line-height: 1.6 !important;
+        }
+        
+        .left-column h2, .right-column h2 {
+            font-size: 1.4em !important;
+            margin: 25px 0 15px 0;
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+        }
+        
+        .left-column p, .right-column p {
+            font-size: 16px !important;
+            margin: 12px 0;
+        }
+        
+        .skill {
+            font-size: 16px !important;
+            line-height: 1.6 !important;
+        }
+        
+        .skill p {
+            font-size: 16px !important;
+            line-height: 1.6 !important;
+        }
+        
+        .left-right {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        
+        .left-text {
+            font-weight: bold;
+            min-width: 120px;
+        }
+        
+        .right-text {
+            text-align: right;
+            font-style: italic;
+        }
+        
+        /* Portfolio and Research section styles */
+        .img-txt-grid h2 {
+            font-size: 1.6em !important;
+            margin: 20px 0 15px 0;
+        }
+        
+        .img-txt-grid p {
+            font-size: 16px !important;
+            line-height: 1.6 !important;
+            margin: 12px 0;
+        }
+        
+        .right-container {
+            font-size: 16px !important;
+            line-height: 1.6 !important;
+        }
+        
+        .right-container p {
+            font-size: 16px !important;
+            line-height: 1.6 !important;
+            margin: 12px 0;
+        }
+        
         /* Mobile responsive */
-        @media screen and (max-width: 768px) {
+        @media screen and (max-width: 968px) {
             body {
                 flex-direction: column;
             }
@@ -90,6 +233,17 @@
             
             .section {
                 padding: 40px 20px;
+            }
+            
+            .content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 20px;
             }
         }
         </style>
@@ -308,7 +462,7 @@
         <!-- Sidebar Navigation -->
         <div class="sidebar">
             <div class="center" style="margin-bottom: 40px;">
-                <div class="center" width=200 height=200>
+                <div class="character-container">
                     <svg height=250 width=160 onmousedown="play()">
                         <path id="head" />
                         <circle id="left-eye" />
@@ -337,8 +491,9 @@
             <div id="home" class="section">
                 <div class="center" style="height: 80vh;">
                     <div class="center-text">
+                        <img src="resume/headshot_small.jpg" alt="Hamish Huggard" class="profile-photo">
                         <h1 class="section-title">Welcome</h1>
-                        <p style="font-size: 1.2em; max-width: 600px; margin: 0 auto;">
+                        <p style="font-size: 1.4em; max-width: 600px; margin: 0 auto;">
                             Hi! I'm Hamish Huggard. I work on data science, machine learning, data visualisation, and web development.
                         </p>
                     </div>
