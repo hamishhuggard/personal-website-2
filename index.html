@@ -16,6 +16,10 @@
             stroke-width: 15;
         }
         
+        svg circle {
+            fill: #000;
+        }
+        
         /* Single page layout styles */
         body {
             margin: 0;
@@ -249,8 +253,61 @@
         </style>
         <script>
 
+            // Scaling system to fit SVG within container
+            function getScaleFactors() {
+                const container = document.querySelector('.character-container');
+                if (!container) return { scaleX: 1, scaleY: 1 };
+                
+                const containerRect = container.getBoundingClientRect();
+                const originalWidth = 240; // Original SVG design width
+                const originalHeight = 370; // Original SVG design height
+                
+                const scaleX = Math.min(containerRect.width / originalWidth, 1);
+                const scaleY = Math.min(containerRect.height / originalHeight, 1);
+                const scale = Math.min(scaleX, scaleY); // Use uniform scaling
+                
+                return { scaleX: scale, scaleY: scale };
+            }
+
+            function scaleCoordinate(x, y) {
+                const { scaleX, scaleY } = getScaleFactors();
+                return {
+                    x: x * scaleX,
+                    y: y * scaleY
+                };
+            }
+
+            function updateStrokeWidth() {
+                const { scaleX } = getScaleFactors();
+                const baseStrokeWidth = 15;
+                const scaledStrokeWidth = Math.max(baseStrokeWidth * scaleX, 1); // Minimum 1px stroke
+                
+                // Update all path elements
+                const paths = document.querySelectorAll('svg path');
+                paths.forEach(path => {
+                    path.style.strokeWidth = scaledStrokeWidth;
+                });
+            }
+
+            function updateCircleRadii() {
+                const { scaleX } = getScaleFactors();
+                // Update any static circle elements that might have fixed radii
+                const circles = document.querySelectorAll('svg circle');
+                circles.forEach(circle => {
+                    const originalRadius = circle.getAttribute('data-original-radius') || circle.getAttribute('r');
+                    if (!circle.getAttribute('data-original-radius')) {
+                        circle.setAttribute('data-original-radius', originalRadius);
+                    }
+                    const scaledRadius = Math.max(parseFloat(originalRadius) * scaleX, 0.5); // Minimum 0.5px radius
+                    circle.setAttribute('r', scaledRadius);
+                });
+            }
+
             function makeNoise() {
-                return Math.round( (Math.random() - 0.5) * 10 );
+                const { scaleX } = getScaleFactors();
+                const baseNoise = 10;
+                const scaledNoise = Math.max(baseNoise * scaleX, 1); // Minimum 1px noise
+                return Math.round( (Math.random() - 0.5) * scaledNoise );
             }
 
             function addNoiseToD(dArray) {
@@ -271,11 +328,13 @@
             ) {
                 return () => {
                     let canvas = document.getElementById(canvasName);
-                    const noisyX = x + makeNoise()
-                    const noisyY = y + makeNoise()
+                    const scaled = scaleCoordinate(x, y);
+                    const { scaleX } = getScaleFactors();
+                    const noisyX = scaled.x + makeNoise()
+                    const noisyY = scaled.y + makeNoise()
                     canvas.setAttribute("cx", noisyX);
                     canvas.setAttribute("cy", noisyY);
-                    canvas.setAttribute("r", radius);
+                    canvas.setAttribute("r", radius * scaleX);
                 }
             }
 
@@ -285,17 +344,24 @@
             ) {
                 return () => {
                     let canvas = document.getElementById(canvasName);
+                    // Scale all coordinates
+                    const scaledCoords = [];
+                    for (let i = 0; i < coords.length; i += 2) {
+                        const scaled = scaleCoordinate(coords[i], coords[i+1]);
+                        scaledCoords.push(scaled.x, scaled.y);
+                    }
+                    
                     let dArray = [ 
                         'M', 
-                        coords[0],
-                        coords[1],
+                        scaledCoords[0],
+                        scaledCoords[1],
                     ]
                     let x0, x1, x2, y0, y1, y2;
-                    for (let i=0; i<coords.length-2; i = i+2) {
-                        x0 = coords[i];
-                        y0 = coords[i+1];
-                        x2 = coords[i+2];
-                        y2 = coords[i+3];
+                    for (let i=0; i<scaledCoords.length-2; i = i+2) {
+                        x0 = scaledCoords[i];
+                        y0 = scaledCoords[i+1];
+                        x2 = scaledCoords[i+2];
+                        y2 = scaledCoords[i+3];
 
                         x1 = Math.round(x0 + (x2 - x0)/2);
                         y1 = Math.round(y0 + (y2 - y0)/2);
@@ -314,6 +380,8 @@
             ) {
                 return () => {
                     let canvas = document.getElementById(canvasName);
+                    const scaled0 = scaleCoordinate(x0, y0);
+                    const scaled1 = scaleCoordinate(x1, y1);
                     const c = 0.552;
                     const smallCircle = [
                         'M', 0, -1,
@@ -330,10 +398,10 @@
                             return x
                         } else if (isX) { 
                             isX = false;
-                            return (x + 1) / 2 * (x1-x0) + x0;
+                            return (x + 1) / 2 * (scaled1.x - scaled0.x) + scaled0.x;
                         } else {
                             isX = true;
-                            return (x + 1) / 2 * (y1-y0) + y0;
+                            return (x + 1) / 2 * (scaled1.y - scaled0.y) + scaled0.y;
                         }
                     })
                     const noisyDArray = addNoiseToD( dArray )
@@ -379,6 +447,8 @@
             var intervalID = window.setInterval(updateCanvas, 150);
 
             function updateCanvas() {
+                updateStrokeWidth(); // Update stroke width based on current scale
+                updateCircleRadii(); // Update circle radii based on current scale
                 for (let updater of Object.values(updaters)) {
                     updater();
                 }
@@ -395,7 +465,8 @@
                 const zDist = Math.max( innerWidth, innerHeight ) / 2;
                 const angleX = Math.atan( (pageX - headX) / zDist );
                 const angleY = Math.atan( (pageY - headY) / zDist );
-                const headRadius = 100;
+                const { scaleX } = getScaleFactors();
+                const headRadius = 100 * scaleX;
                 const eyeLeftX = headRadius * Math.sin( angleX - Math.PI/10 );
                 const eyeRightX = headRadius * Math.sin( angleX + Math.PI/10 );
                 const eyeLeftY = Math.sqrt(headRadius**2 - eyeLeftX**2) * Math.sin( angleY );
@@ -455,6 +526,14 @@
             // Initialize active nav item
             window.addEventListener('load', function() {
                 document.querySelector('[onclick="scrollToSection(\'home\')"]').classList.add('active');
+                updateStrokeWidth(); // Set initial stroke width
+                updateCircleRadii(); // Set initial circle radii
+            });
+
+            // Recalculate scaling on window resize
+            window.addEventListener('resize', function() {
+                // Force a redraw by updating the canvas
+                updateCanvas();
             });
         </script>
     </head>
