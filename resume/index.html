@@ -4,106 +4,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <title>My CV</title>
+  <title>Hamish Huggard - CV</title>
 </head>
 <body>
-<!--
-This layout is based on https://www.coolfreecv.com
--->
-    <div class="page">
+<div class="page">
 
-            <!--
-        <div class="section name">
-            <div class="image-container">
-                <img src="headshot.jpg" alt="Circular Image" class="circular-image">
-            </div>
-            <h1>Hamish Huggard</h1>
-            <h1>Name Nameson</h1>
-        </div>
-            -->
-
+        <div class="masthead">
         <div class="header">
-            <div class="profile-image">
-                <img src="headshot_small.jpg" alt="Profile Image">
-            </div>
             <div class="contact-info">
-                <h1>HAMISH HUGGARD</h1>
-                <p>hamish.huggard@gmail.com</p>
-                <p>https://github.com/hamishhuggard</p>
+                <h1>Hamish Huggard</h1>
+                <p class="role">Physics Teacher &amp; AI Engineer</p>
+                <p class="contact-row" style="display: flex; flex-direction: row; justify-content: space-between; width: 100%; max-width: 600px; padding-right: 20px;">
+                <span>hamishhuggard@gmail.com</span>
+                <span>github.com/hamishhuggard</span>
+                <span>+64 21-0261-6118</span>
+                </p>
             </div>
+        </div>
+
+
+            <section class="summary">
+                                <p>Physics teacher at Glenfield College, specialising in building <strong>science simulations</strong> and <strong>classroom software</strong>.</p>
+                <p>M.Sc. in Computer Science (awarded <strong>Best Thesis</strong>) and a conjoint B.Sc. in Physics &amp; Computer Science / B.A. in Philosophy &amp; Mathematics, with <strong>three machine learning publications</strong>. Before teaching I spent five years as a <strong>data scientist and machine learning engineer</strong>, working on clinical AI at Orion Health, research tools at Litmaps, and frontier AI evaluations at METR. In between, I spent a year making educational animations — one hit <strong>3 million views</strong> and led to a <strong>six-figure grant</strong> to make more.</p>
+            </section>
         </div>
 
         <div class="content">
             <div class="left-column">
-                <section class="summary">
-                    <h2>Summary</h2>
-                    <p>My main areas of interest are data science, machine learning, data visualisation, and web development.</p>
-                    <!--
-                    <p>My honours thesis and summer research project was on spatiotemporal modelling of atmospheric data (see 2018 publication below). My M.Sc. thesis focused on biomedical applications of natural language processing. It was described by one of my examiners as the best master’s thesis they had seen. I am also the lead author of three published papers on pro-social applications of machine learning.
-                    I have over two years of corporate experience in data science and web development. I spent a year at medical software company Orion Health, where I worked on deep learning applications in medical software, and a year at the startup Litmaps, where I worked on data visualisation, data engineering, and deploying machine learning services.
-                    After Litmaps, I decided to take some time o↵ to do freelancing and walk the length of New Zealand on the Te Araroa Trail. I then built a portfolio and received a grant to create educational media on global challenges. I’m currently doing data annotation and model interaction contracting at Model Evaluation & Threat Research (METR).</p>
-                -->
-                </section>
-
-                <section class="tech-skills">
-                    <h2>Skills</h2>
-                    <div class="skill"> <p>Python, Machine Learning, Deep Learning, LLMs, NLP, PyTorch, Pandas, SKLearn, SQL, Postgres, Data visualisation, Matplotlib, Plotly, Illustration, Web development, HTML, CSS, Javascript, D3.js, Copy writing, Research</p> </div>
-                    <!--
-                    <div class="skill">
-                        <p>Adobe Photoshop</p>
-                        <img src="logos/python.webp"/>
-                        <div class="skill-bar"><span style="width: 90%;"></span></div>
-                    </div>
-                    <div class="skill">
-                        <p>Adobe InDesign</p>
-                        <div class="skill-bar"><span style="width: 75%;"></span></div>
-                    </div>
-                    <div class="skill">
-                        <p>Adobe Illustrator</p>
-                        <div class="skill-bar"><span style="width: 85%;"></span></div>
-                    </div>
-                    <div class="skill">
-                        <p>Adobe Fresco</p>
-                        <div class="skill-bar"><span style="width: 70%;"></span></div>
-                    </div>
-                    -->
-                </section>
 
                 <section class="skills">
-                    <h2>Awards</h2>
-                    <p>
-                        2020 
-                        <i>
-                        Best M.Sc. Thesis in Computer Science
-                        </i>
-                        <br>
-
-                        2019 
-                        <i>
-                        Postgraduate Research Scholarship
-                        </i>
-                        <br>
-
-                        2017 
-                        <i>
-                        Postgraduate Honours Scholarship
-                        </i>
-                        <br>
-
-                        2017 
-                        <i>
-                        Senior Scholar Award in the Faculty of Arts
-                        </i>
-                        <br>
-
-                        2015 
-                        <i>
-                        Sir Robert Jones Scholarship in Philosophy
-                        </i>
-                        <br>
+                    <h2>Publications</h2>
+                    <p class="entry">2020 <i>Concept drift detection for medical triage.</i>
+                    <small><strong>H. Huggard</strong>, Y.S. Koh, G. Dobbie, E. Zhang. <br>ACM SIGIR.</small></p>
+                    <p class="entry">2019 <i>Feature importance for biomedical named entity recognition.</i>
+                    <small><strong>H. Huggard</strong>, A. Zhang, E. Zhang, Y.S. Koh. <br>AI: Advances in Artificial Intelligence.</small></p>
+                    <p class="entry">2018 <i>Predicting air quality from low-cost sensor measurements.</i>
+                    <small><strong>H. Huggard</strong>, Y.S. Koh, P. Riddle, G. Olivares. <br>Australasian Conference on Data Mining.</small></p>
                 </section>
-
-
+                <section class="tech-skills">
+                    <h2>Technical Skills</h2>
+                    <div class="skill"> 
+                        <p><strong>Teaching:</strong> physics &amp; mathematics, interactive simulation design, explanatory animation, technical writing.</p>
+                        <p><strong>AI &amp; ML:</strong> Python, PyTorch, LLMs, AI Agents, Claude Code, Cursor, NLP, Scikit-Learn, Pandas.</p>
+                        <p><strong>Web &amp; Viz:</strong> JavaScript, HTML, D3.js, React, Plotly, CSS.</p>
+                        <p><strong>Engineering:</strong> Git, SQL, Postgres, Docker, Linux, Kubernetes.</p>
+                    </div>
+                </section>
+                <section class="skills">
+                    <h2>Adventures</h2>
+                    <p class="entry"><span class="yr">2026 <span class="yr-note">64km in 6:54</span></span><i>South Island Ultra-marathon</i></p>
+                    <p class="entry"><span class="yr">2023 <span class="yr-note">280km in 3 weeks</span></span><i>Camino de Santiago, Portugal</i></p>
+                    <p class="entry"><span class="yr">2021 <span class="yr-note">3,000km in 6 months</span></span><i>Te Araroa Trail, the length of NZ</i></p>
+                </section>
             </div>
 
             <div class="right-column">
@@ -112,32 +64,49 @@ This layout is based on https://www.coolfreecv.com
                     <h2>Experience</h2>
 
                     <p>
-
                     <span class="left-right">
                         <span class="left-text">
-                            2024
-                            <strong>METR</strong>
+                            2026-Present
+                            <strong>Glenfield College</strong>
                         </span>
                         <span class="right-text">
-                            Model Interaction Contractor
+                            Physics Teacher (Trainee)
                         </span>
                     </span>
-                    I work on developing evaluations for cutting edge language models to measure their ability to write code, do AI research, and other tasks.
+                    Teaching Year 9 and 10 science and Year 12 and 13 physics full-time.
+                    <br>
+                    Built my own software suite for teaching, combining slide decks, lesson plans, calendars, timetables, roll call, flashcards, student progress tracking, and interactive simulations.
+                    <br>
+                    Coach the robotics club and help run the adventure club.
+                    </p>
+
+                    <p>
+                    <span class="left-right">
+                        <span class="left-text">
+                            2024-2025
+                            <strong>Equistamp</strong>
+                        </span>
+                        <span class="right-text">
+                            Research Engineer (Contract)
+                        </span>
+                    </span>
+                    Expert human baseline for benchmarking frontier AI agents on programming and ML tasks, plus QA on model outputs and code for the evaluation suites.
                     </p>
 
                     <p>
                     <span class="left-right">
                         <span class="left-text">
                             2022-2023
-                            <strong>Sketchy Reasoning</strong>
+                            <strong>Global Problems Cheatsheet</strong>
                         </span>
                         <span class="right-text">
-                            Animator
+                            Writer &amp; Animator
                         </span>
                     </span>
-                    I won a grant from Open Philanthropy to create animations explaining global challenges.
+                    Spent a year writing and animating an illustrated primer on the world's most pressing problems &mdash; global poverty, pandemics, nuclear war, AI, and climate change.
                     </p>
 
+                    
                     <p>
                     <span class="left-right">
                         <span class="left-text">
@@ -148,7 +117,7 @@ This layout is based on https://www.coolfreecv.com
                             Data Scientist
                         </span>
                     </span>
-                    I deployed NLP features with Python, Linux, AWS. Plus data visualisation with Javascript and React, and data engineering with Postgres and Redis.
+                    Built the interactive research-graph visualizations at the core of the product in React and D3.js, and deployed the company's first production AI features.
                     </p>
 
                     <p>
@@ -158,10 +127,23 @@ This layout is based on https://www.coolfreecv.com
                             <strong>Orion Health</strong>
                         </span>
                         <span class="right-text">
-                            Intern/Graduate Data scientist
+                            Data Scientist (Graduate)
                         </span>
                     </span>
-                    I worked on biomedical applications of natural language processing and deep learning.
+                    Developed a novel feature engineering library for biomedical text, improving the F1-score of deep learning models for named entity recognition in clinical notes.
+                    </p>
+
+                    <p>
+                    <span class="left-right">
+                        <span class="left-text">
+                            2015-2018
+                            <strong>University of Auckland</strong>
+                        </span>
+                        <span class="right-text">
+                            Teaching Assistant
+                        </span>
+                    </span>
+                    Taught physics and computer science labs alongside my undergraduate study.
                     </p>
 
                 </section>
@@ -177,13 +159,15 @@ This layout is based on https://www.coolfreecv.com
                                 </i>
                             </span>
                             <span class="right-text">
-                            GPA: 9.0/9.0
+                            <strong>GPA: 4.0 / 4.0</strong>
                             </span>
                         </span>
-                        <strong>
-                        Master's Degree in Computer Science
-                        </strong>
-                        <br>
+                        <span class="left-right">
+                            <span class="left-text"><strong>Master of Science (M.Sc.)</strong></span>
+                            <span class="right-text">Computer Science</span>
+                        </span>
+                        <small>My external examiner described it as <strong>"the best Masters thesis I have seen."</strong><br>Best M.Sc. Thesis Award, CS Dept (2020) &middot; Precision Driven Health Scholarship (2019)<br>Postgraduate Honours Scholarship (2017)</small>
+                        <span class="edu-gap"></span>
 
                         <span class="left-right">
                             <span class="left-text">
@@ -193,14 +177,15 @@ This layout is based on https://www.coolfreecv.com
                                 </i>
                             </span>
                             <span class="right-text">
-                                GPA: 8.6/9.0
+                                <strong>GPA: 3.81 / 4.0</strong>
                             </span>
                         </span>
-                        <strong>
-                        Bachelor of Science in Physics and Computer Science
-                        </strong>
-                        <br>
-                        
+                        <span class="left-right">
+                            <span class="left-text"><strong>Bachelor of Science (B.Sc.)</strong></span>
+                            <span class="right-text">Physics &amp; Computer Science (double major)</span>
+                        </span>
+                        <span class="edu-gap"></span>
+
                         <span class="left-right">
                             <span class="left-text">
                                 2014-2017
@@ -209,45 +194,17 @@ This layout is based on https://www.coolfreecv.com
                                 </i>
                             </span>
                             <span class="right-text">
-                            GPA: 8.6/9.0
+                                <strong>GPA: 3.81 / 4.0</strong>
                             </span>
                         </span>
-                        <strong>
-                        Bachelor of Science in Physics and Computer Science
-                        </strong>
+                        <span class="left-right">
+                            <span class="left-text"><strong>Bachelor of Arts (B.A.)</strong></span>
+                            <span class="right-text">Philosophy &amp; Mathematics (double major)</span>
+                        </span>
+                        <small>Senior Scholar Award, Faculty of Arts (2017) &middot; Sir Robert Jones Scholarship in Philosophy (2015)</small>
                 </section>
 
                 
-                <section class="skills">
-                    <h2>Publications</h2>
-                    <p>
-                    2020 <i>Concept drift detection for medical triage.</i>
-                    <br>
-                    <small>
-                    Hamish Huggard, Yun Sing Koh, Gillian Dobbie, Edmond Zhang. 
-                    </small>
-                    <br>
-                    2019 <i>Feature importance for biomedical named entity recognition.</i>
-                    <br>
-                    <small>
-                    Hamish Huggard, Aaron Zhang, Edmond Zhang, Yun Sing Koh. 
-                    </small>
-                    <br>
-                    2018 <i>Predicting air quality from low-cost sensor measurements.</i>
-                    <br>
-                    <small>Hamish Huggard, Yun Sing Koh, Patricia Riddle, Gustavo Olivares.</small>
-                    </p>
-                </section>
-
-                <section class="skills">
-                    <h2>Other accomplishments</h2>
-                    <p>
-                        2022 
-                        <i>
-                        Walked the length of New Zealand on the </i>Te Araroa<i> trail.
-                        </i>
-                </section>
-
 
             </div>
         </div>
